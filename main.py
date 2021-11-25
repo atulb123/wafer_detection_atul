@@ -61,7 +61,7 @@ def predict():
 # def testing():
 #     return render_template("predict.html", message="hello", url="/static/prediction_output.csv")
 
-port = int(os.getenv("PORT", 5001))
+port = int(os.getenv("PORT", 5000))
 if __name__ == "__main__":
     host = '0.0.0.0'
     httpd = simple_server.make_server(host=host, port=port, app=app)
