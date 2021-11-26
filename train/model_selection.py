@@ -35,6 +35,7 @@ class ModelSelection:
         self.x = df.drop(
             columns=self.json_reader.get_value_from_json_file(os.getcwd() + "/schema_training.json", "outcome_column"))
         self.y = df[self.json_reader.get_value_from_json_file(os.getcwd() + "/schema_training.json", "outcome_column")]
+        self.x, self.y = self.create_best_model.handle_imbalanced_dataset(self.x, self.y, 1)
         self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(self.x, self.y, train_size=.75)
 
     def create_clusters_and_select_best_model(self):
@@ -49,7 +50,7 @@ class ModelSelection:
                                                                        "outcome_column")
             include_columns = df_with_cluster_group.drop(columns=["cluster_group", outcome_column]).columns
             df_temp = df_with_cluster_group[df_with_cluster_group["cluster_group"] == cluster]
-            x, y = self.create_best_model.handle_imbalanced_dataset(df_temp[include_columns], df_temp[outcome_column],1)
+            x, y = df_temp[include_columns], df_temp[outcome_column]
             x_train, x_test, y_train, y_test = train_test_split(x, y,
                                                                 test_size=.25)
             self.create_best_model.get_best_model(x_train, x_test, y_train, y_test, cluster)

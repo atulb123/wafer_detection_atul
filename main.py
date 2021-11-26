@@ -23,7 +23,7 @@ def train():
         folder = CreateDeleteFolder()
         folder.perform_folder_clean_up()
         files = request.files.getlist("file")
-        if "octet-stream" in str(files[0]):
+        if ".csv" not in str(files):
             folder.copy_files_to_folder(os.getcwd() + "/train_test_files/default_training_files",
                                         os.getcwd() + "/train_test_files/train_raw_dataset")
         else:
@@ -41,7 +41,7 @@ def predict():
     try:
         folder = CreateDeleteFolder()
         files = request.files.getlist("file")
-        if "octet-stream" in str(files[0]):
+        if ".csv" not in str(files):
             folder.copy_files_to_folder(os.getcwd() + "/train_test_files/default_test_files",
                                         os.getcwd() + "/train_test_files/test_raw_dataset")
         else:
